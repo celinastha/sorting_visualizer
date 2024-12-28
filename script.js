@@ -5,25 +5,19 @@ var sortType = bubblesort;
 var slider = document.getElementById('rangeSlider');
 var sliderOutput = document.getElementById('sliderOutput');
 var type = document.getElementById('sortTypeDropdown');
-var typeOutput = document.getElementById('sortTypeOut');
-console.log("sort1: " + sortType);
 
 
 sliderOutput.innerHTML = slider.value;
 slider.oninput = function() {
     sliderOutput.innerHTML = this.value;
 }
-type.onchange = function(){
-    typeOutput.innerHTML = type.value;
-    sortType = type.value;//red
-}
-n = slider.value;
+
 
 
 document.getElementById("playBtn").addEventListener('click', (e) =>{
     e.preventDefault();
     n = slider.value;
-    sortType = type.value;//red
+    sortType = type.value;
     play();
 });
 
@@ -35,8 +29,6 @@ document.getElementById("init").addEventListener('click', (e) =>{
 
 init();
 
-
-
 function init(){
     const n = sliderOutput.innerHTML;
     for(let i=0; i<n; i++){
@@ -47,78 +39,108 @@ function init(){
 }
 
 function play(){
-    const arrayCopy = [...array]; 
-    var sortmoves=[];
     if(sortType == "bubblesort"){
-        sortmoves = bubblesort(arrayCopy);
+        bubblesort(array);
     } else if(sortType == "quicksort"){
-        sortmoves = quicksort(arrayCopy);
+        quicksort(array, 0, n-1);
+    } else if(sortType == "mergesort"){
+        mergesort(array, 0, n-1);
     }
-    animate(sortmoves);
+    showbars();
 }
 
-function animate(moves){
-    if(moves.length==0){
-        showbars();
-        return;
-    }
-    const move= moves.shift();
-    const [i,j] = move.indices;
+//MERGESORT ALGORITHM
+function merge(array, left, mid, right){
+    const leftArray = new Array(mid-left+1);
+    const rightArray = new Array(right-mid);
 
-    if(move.type=='swap'){
-        [array[i], array[j]] = [array[j], array[i]];   
+    for(let i=0; i<leftArray.length; i++){
+        leftArray[i] = array[left + i];
+    }
+    for(let j=0; j<rightArray.length; j++){
+        rightArray[j] = array[mid + 1 + j];
     }
 
-    showbars(move);
-    setTimeout(() => {
-        animate(moves);
-    },10);
+    let i=0, j=0;
+    let k = left;
+
+    while(i<leftArray.length && j<rightArray.length){
+        if(leftArray[i]<=rightArray[j]){
+            array[k] = leftArray[i];
+            i++;
+        } else{
+            array[k] = rightArray[j];
+            j++;
+        }
+        k++;
+    }
+
+    while(i < leftArray.length){
+        array[k] = leftArray[i];
+        i++;
+        k++;
+    }
+
+    while(j < rightArray.length){
+        array[k] = rightArray[j];
+        j++;
+        k++;
+    }   
+}
+function mergesort(array, left, right){
+    console.log("Mergesort running");
+    if(left < right){
+        var mid = Math.floor(left + (right-left) / 2);
+        mergesort(array, left, mid);
+        mergesort(array, mid+1, right);
+        merge(array, left, mid, right);
+    }
+    console.log("Mergesort done!");
 }
 
-
-
-function partition(array, low, high, moves){
-    var pivot = array[high];
-    var i = low-1;
+//QUICKSORT ALGORITHM  
+function partition(array, low, high){
+    let pivot = array[high];
+    let i = low-1;
     for(let j=low; j<=high; j++){
-        moves.push({indices: [i, j], type: 'sel'});
         if(array[j] < pivot){
             i++;
-            moves.push({indices: [i, j], type: 'swap'});
-            [array[i], array[j]] = [array[j], array[i]];
+            swap(array, i, j);
         }
     }
-    [array[i+1], array[high]] = [array[high], array[i+1]];
+    swap(array, i+1, high)
     return i+1;
 }
-function quicksort(array){
-    const moves = [];
-    var low = 0;
-    var high = array.length - 1;
+function quicksort(array, low, high){
+    console.log("Quicksort running");
     if(low < high){
-        var pi = partition(array, low, high, moves);
+        let pi = partition(array, low, high);
         quicksort(array, low, pi-1);
         quicksort(array, pi+1, high);
     }
-    return moves;
+    console.log("Quicksort done!");
 }
 
 
-
+//BUBBLESORT ALGORITHM
 function bubblesort(array) {
-    const moves = [];
+    console.log("Bubblesort running");
     do{
         var swapped = false;
         for(let i=1;i<array.length; i++){
-            moves.push({indices: [i-1, i], type: 'selec'});
             if(array[i-1]>array[i]){
-                moves.push({indices: [i-1, i], type: 'swap'});
-                [array[i-1], array[i]] = [array[i], array[i-1]];   
+                swap(array, i-1, i);   
                 swapped = true;
             }
         }
     }while(swapped);
-    return moves;
+    console.log("Bubblesort done!");
+}
+
+function swap(array, index1, index2){
+    var temp = array[index1];
+    array[index1] = array[index2];
+    array[index2] = temp;
 }
 
 function showbars(move){
@@ -128,11 +150,6 @@ function showbars(move){
         bar.style.height = array[i]*100+'%';
         bar.style.width = '10px';
         bar.style.backgroundColor = 'grey'
-
-        if(move && move.indices.includes(i)){
-            bar.style.backgroundColor = 
-                move.type=='swap'?'red':'blue';
-        }
         container.appendChild(bar);
     }
 }
