@@ -3,14 +3,18 @@
 <head>
     <title>Sorting Visual</title>
     <link rel="stylesheet" href="style.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Anton&family=Barlow+Condensed:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap" rel="stylesheet">
     <script src="https://kit.fontawesome.com/f3ca928850.js" crossorigin="anonymous"></script>
 </head>
 <body>
     <h1>Sorting Visualizer</h1>
     <p>Select number of elements to sort and the type of sort you would like to visulaize and press play.</p>
     <form id="sort_form">
-        <label for="rangeSlider"> Number of Elem: <span id="sliderOutput"></span></label>
+        <label for="rangeSlider"> Number Of Elem: <span id="sliderOutput"></span></label>
         <input type="range" min="10" max="150" value="10" id="rangeSlider">
+        <label for="sortTypeDropdown"> Sort Type: </label>
         <select id="sortTypeDropdown" >
             <option value="bubblesort">bubblesort</option>
             <option value="quicksort">quicksort</option>
@@ -19,9 +23,19 @@
             <option value="insertionsort">insertionsort</option>
             
         </select>
-        <button type="submit" id="playBtn"><i class="fa-solid fa-play"></i> Play</button>
-        <button id="stopBtn"><i class="fa-solid fa-stop"></i> Stop</button>
-        <button id="init"><i class="fa-solid fa-arrows-rotate"></i></button>
+        <div class="controls">
+            <select id="sortSpeed" >
+                <option value="1">x1</option>
+                <option value="1.25">x1.25</option>
+                <option value="1.5">x1.5</option>
+                <option value="0.25">x0.25</option>
+                <option value="0.5">0.5</option>
+                
+            </select>
+            <button id="playBtn"><i class="fa-solid fa-play"></i> Play</button>
+            <button id="stopBtn"><i class="fa-solid fa-stop"></i> Stop</button>
+            <button id="init"><i class="fa-solid fa-arrows-rotate"></i></button>    
+        </div>
     </form>
     
     <div id="container"></div>
