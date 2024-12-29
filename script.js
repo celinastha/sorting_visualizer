@@ -18,6 +18,7 @@ init();
 
 document.getElementById("playBtn").addEventListener('click', (e) =>{
     e.preventDefault();
+    console.log(array);
     sortType = type.value;
     play();
 });
@@ -33,7 +34,6 @@ function init(){
     for(let i=0; i<n; i++){
         array[i] = Math.random();
     }
-    console.log(array);
     showbars();
 }
 
