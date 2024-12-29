@@ -10,24 +10,23 @@ var type = document.getElementById('sortTypeDropdown');
 sliderOutput.innerHTML = slider.value;
 slider.oninput = function() {
     sliderOutput.innerHTML = this.value;
+    n = slider.value;
+    init();
 }
 
-
+init();
 
 document.getElementById("playBtn").addEventListener('click', (e) =>{
     e.preventDefault();
-    n = slider.value;
     sortType = type.value;
     play();
 });
 
 document.getElementById("init").addEventListener('click', (e) =>{
     e.preventDefault();
-    n = slider.value;
     init();
 });
 
-init();
 
 function init(){
     const n = sliderOutput.innerHTML;
@@ -45,8 +44,44 @@ function play(){
         quicksort(array, 0, n-1);
     } else if(sortType == "mergesort"){
         mergesort(array, 0, n-1);
-    }
+    } else if(sortType == "selectionsort"){
+        selectionsort(array);
+    } else if(sortType == "insertionsort"){
+        insertionsort(array);
+    } 
     showbars();
+}
+
+//INSERSIONSORT ALGORITHM
+function insertionsort(array){
+    console.log("Insertionsort running");
+    for(let i=1; i<array.length; i++){
+        let key = array[i];
+        let j=i-1;
+
+        while(j>=0 && array[j]>key){
+            array[j+1] = array[j];
+            j=j-1;
+        }
+        array[j+1] = key;
+    }
+    console.log("Insertionsort done!");
+}
+
+
+//SELECTIONSORT ALGORITHM
+function selectionsort(array){
+    console.log("Selectionsort running");
+    for(let i=0; i<array.length-1; i++){
+        let minIndex = i;
+        for(let j=i+1; j<array.length; j++){
+            if(array[j] < array[minIndex]){
+                minIndex = j;
+            }
+        }
+        swap(array, i, minIndex);
+    }
+    console.log("Selectionsort done!");
 }
 
 //MERGESORT ALGORITHM
