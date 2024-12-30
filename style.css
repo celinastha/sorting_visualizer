@@ -68,8 +68,8 @@ h1{
     flex-direction: column;
     align-items: center;
     justify-content: center;
-    gap: 18px;
-    padding: 3.6vh 5vw;
+    gap: 3vh;
+    padding: 3vh 5vw;
     margin: 3vh 0;
     border-radius: 50px;
     background-color: #00a8f711;
@@ -88,8 +88,7 @@ h1{
 .elem_type_input input[type=range]{
     accent-color: #58caff;
 }
-/*accent-color: #58caff;
-border: 2.4px solid #fff;*/
+
 
 label[for="sortTypeDropdown"]{
     margin-left: 40px;
@@ -107,7 +106,7 @@ label[for="sortTypeDropdown"]{
 }
 #playBtn,
 #stopBtn{
-    padding: 4px 14px;
+    padding: 3px 14px;
     border-radius: 50px;
     border: 2.3px solid #e0f4ff;
     display: flex;
@@ -138,7 +137,7 @@ label[for="sortTypeDropdown"]{
     border-radius: 20px;
 }
 #sortSpeed{
-    padding: 4px;
+    padding: 3px;
     background-color: #ffffff;
     color: #08577ce0; 
     font-weight: 500;
@@ -159,10 +158,39 @@ select{
     font-size: 1em;
 }
 
+#sortStatus{
+    display: none;
+    width: 30%;
+    padding: 8px 0px;
+    margin-bottom: 14px;
+    text-align: center;
+    font-size: 0.9em;
+    font-weight: 500;
+    color: #ffffff;
+    border: 2px solid #ffffff;
+    border-radius: 20px;
+    background-color: #6d8a9e15;
+}
+#sortStatus.stopped{
+    display: block;
+    border-color: #db3232;
+    color: #db3232;
+}
+#sortStatus.running{
+    display: block;
+    border-color: #02b602;
+    color: #02b602;
+}
+#sortStatus.done{
+    display: block;
+    border-color: #65c2ff;
+    color: #65c2ff;
+}
 
-#container{
+
+#barContainer{
     width: 80%;
-    height: 45vh;
+    height: 40vh;
     display: flex;
     align-items: flex-end;
 }
@@ -231,4 +259,5 @@ select{
 .legend{
     width: 20px;
     height: 20px;
+    border-radius: 35%;
 }
