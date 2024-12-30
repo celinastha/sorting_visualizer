@@ -4,10 +4,11 @@ var sortType = bubblesort;
 var sortSpeed = 100;
 var shouldRun = true; 
 
-var slider = document.getElementById('rangeSlider');
-var sliderOutput = document.getElementById('sliderOutput');
-var type = document.getElementById('sortTypeDropdown');
-var speed = document.getElementById('sortSpeed');
+const slider = document.getElementById('rangeSlider');
+const sliderOutput = document.getElementById('sliderOutput');
+const type = document.getElementById('sortTypeDropdown');
+const speed = document.getElementById('sortSpeed');
+const sortStatus = document.getElementById('sortStatus');
 
 sliderOutput.innerHTML = slider.value;
 slider.oninput = function() {
@@ -46,7 +47,7 @@ document.getElementById("initBtn").addEventListener('click', (e) =>{
 document.getElementById("stopBtn").addEventListener('click', (e) =>{
     e.preventDefault();
     shouldRun = false;
-    console.log("Sorting stopped!");
+    setStatus("stopped");
     
 });
 
@@ -56,6 +57,7 @@ function init(){
     for(let i=0; i<n; i++){
         array[i] = Math.random();
     }
+    reset();
     showbars();
 }
 
@@ -75,7 +77,7 @@ function play(){
 
 //INSERSIONSORT ALGORITHM
 async function insertionsort(array){
-    console.log("Insertionsort running");
+    setStatus("InsertionSort", "running...");
     for(let i=1; i<array.length; i++){
         if (!shouldRun) break;
         let key = array[i];
@@ -94,14 +96,14 @@ async function insertionsort(array){
         array[j+1] = key;
     }
     showbars();
-    resetBarClasses();
-    console.log("Insertionsort done!");
+    reset();
+    setStatus("InsertionSort", "done!");
 }
 
 
 //SELECTIONSORT ALGORITHM
 async function selectionsort(array){
-    console.log("Selectionsort running");
+    setStatus("SelectionSort", "running...");
     for(let i=0; i<array.length-1; i++){
         if (!shouldRun) break;
         let minIndex = i;
@@ -124,8 +126,8 @@ async function selectionsort(array){
         await new Promise(r => setTimeout(r, sortSpeed));
     }
     showbars();
-    resetBarClasses();
-    console.log("Selectionsort done!");
+    reset();
+    setStatus("SelectionSort", "done!");
 }
 
 //MERGESORT ALGORITHM
@@ -134,9 +136,11 @@ async function merge(array, left, mid, right){
     const rightArray = new Array(right-mid);
 
     for(let i=0; i<leftArray.length; i++){
+        if (!shouldRun) break;
         leftArray[i] = array[left + i];
     }
     for(let j=0; j<rightArray.length; j++){
+        if (!shouldRun) break;
         rightArray[j] = array[mid + 1 + j];
     }
 
@@ -161,6 +165,7 @@ async function merge(array, left, mid, right){
     }
 
     while(i < leftArray.length){
+        if (!shouldRun) break;
         array[k] = leftArray[i];
         i++;
         k++;
@@ -169,6 +174,7 @@ async function merge(array, left, mid, right){
     }
 
     while(j < rightArray.length){
+        if (!shouldRun) break;
         array[k] = rightArray[j];
         j++;
         k++;
@@ -177,32 +183,35 @@ async function merge(array, left, mid, right){
     }   
 }
 async function mergesort(array, left, right){
-    console.log("Mergesort running");
+    setStatus("MergeSort", "running...");
     if(left < right){
-        var mid = Math.floor(left + (right-left) / 2);
+        const mid = Math.floor(left + (right-left) / 2);
         await mergesort(array, left, mid);
         await mergesort(array, mid+1, right);
         await merge(array, left, mid, right);
     }
-    showbars();
-    resetBarClasses();
-    console.log("Mergesort done!");
+    if (left === 0 && right === array.length - 1) { 
+        showbars();
+        reset();
+        setStatus("MergeSort", "done!");
+    }
+    
 }
 
 //QUICKSORT ALGORITHM  
 async function partition(array, low, high){
     let pivot = array[high];
-    let i = low-1;
-
     showbars([high], 'pivot'); 
     await new Promise(r => setTimeout(r, sortSpeed));
+    
+    let i = low-1;
 
-    for(let j=low; j<=high; j++){
+    for(let j=low; j<high; j++){
         if (!shouldRun) break;
         showbars([j, high], 'compare'); 
         await new Promise(r => setTimeout(r, sortSpeed));
         
-        if(array[j] < pivot){
+        if(array[j] <= pivot){
             i++;
             swap(array, i, j);
 
@@ -216,21 +225,21 @@ async function partition(array, low, high){
     return i+1;
 }
 async function quicksort(array, low, high){
-    console.log("Quicksort running");
+    setStatus("QuickSort", "running...");
     if(low < high){
-        let pi = partition(array, low, high);
+        let pi = await partition(array, low, high);
         await quicksort(array, low, pi-1);
         await quicksort(array, pi+1, high);
     }
     showbars();
-    resetBarClasses();
-    console.log("Quicksort done!");
+    reset();
+    setStatus("QuickSort", "done!");
 }
 
 
 //BUBBLESORT ALGORITHM
 async function bubblesort(array) {
-    console.log("Bubblesort running");
+    setStatus("BubbleSort", "running...");
     do{
         var swapped = false;
         for(let i=1;i<array.length; i++){
@@ -249,8 +258,9 @@ async function bubblesort(array) {
         }
     }while(swapped);
     showbars();
-    resetBarClasses();
-    console.log("Bubblesort done!");
+    reset();
+    setStatus("BubbleSort", "done!");
+    
 }
 
 function swap(array, index1, index2){
@@ -260,7 +270,8 @@ function swap(array, index1, index2){
 }
 
 function showbars(activeIndices=[], action=''){
-    container.innerHTML="";
+    const barContainer = document.querySelector('#barContainer');
+    barContainer.innerHTML="";
     let m = 0;
     if(n<=12){
         m=70;
@@ -277,7 +288,7 @@ function showbars(activeIndices=[], action=''){
     } else{
         m=2;
     }
-    const containerWidth = container.clientWidth; 
+    const containerWidth = barContainer.clientWidth; 
     const barWidth = Math.max(m, (containerWidth / array.length) - 2);
     for(let i=0; i<n; i++){
         const bar = document.createElement('div');
@@ -301,14 +312,36 @@ function showbars(activeIndices=[], action=''){
             }
         
         }
-        container.appendChild(bar);
+        barContainer.appendChild(bar);
     }
 }
 
-function resetBarClasses() {
+function reset() {
     const bars = document.getElementsByClassName('bar');
     for (let bar of bars) {
       bar.classList.remove('compare', 'move', 'swap', 'merge', 'pivot', 'minIndex');
     }
-  }
+    sortStatus.classList.remove("stopped", "running", "done");
+}
+
+function setStatus(sortingType, status){
+    if(!shouldRun || status == "stopped"){
+        sortStatus.classList.add("stopped");
+        sortStatus.classList.remove("running", "done");
+        sortStatus.innerHTML = "Sorting stopped";
+        console.log("Sorting stopped");
+    }
+    if(shouldRun){
+        if(status == "running..."){
+            sortStatus.classList.add("running");
+            sortStatus.classList.remove("stopped", "done");
+        } else if(status == "done!"){
+            sortStatus.classList.add("done");
+            sortStatus.classList.remove("stopped", "running");
+        }
+        sortStatus.innerHTML = sortingType + " is " + status;
+        console.log(sortingType + " is " + status);
+    }
+    
+}
 
