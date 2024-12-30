@@ -38,7 +38,7 @@ document.getElementById("playBtn").addEventListener('click', (e) =>{
     play();
 });
 
-document.getElementById("init").addEventListener('click', (e) =>{
+document.getElementById("initBtn").addEventListener('click', (e) =>{
     e.preventDefault();
     init();
 });
@@ -261,9 +261,28 @@ function swap(array, index1, index2){
 
 function showbars(activeIndices=[], action=''){
     container.innerHTML="";
+    let m = 0;
+    if(n<=12){
+        m=70;
+    } else if(n<=18){
+        m=50;
+    } else if(n<=40){
+        m=20;
+    } else if(n<=65){
+        m=10;
+    } else if(n<=100){
+        m=5;
+    } else if(n<=130){
+        m=3;
+    } else{
+        m=2;
+    }
+    const containerWidth = container.clientWidth; 
+    const barWidth = Math.max(m, (containerWidth / array.length) - 2);
     for(let i=0; i<n; i++){
         const bar = document.createElement('div');
         bar.style.height = array[i]*100+'%';
+        bar.style.width = `${barWidth}px`;
         bar.classList.add('bar');
         
         if(activeIndices.includes(i)) {
