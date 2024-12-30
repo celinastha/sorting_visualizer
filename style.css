@@ -1,71 +1,234 @@
+*{
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    overflow: hidden;
+}
+
 body{
+    width: 100%;
+    height: 100vh;
+    font-family: "Barlow Condensed", serif;
+    font-style: normal;
+    background-color: #023146;
+    color: white;
+    font-size: 1.25em;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    
+}
+
+.all_content_container{
+    height: 100%;
     display: flex;
     flex-direction: column;
     align-items: center;
-    justify-content: center;
-    font-family: "Barlow Condensed", serif;
-    font-style: normal;
-    background-color: #01172e;
-    color: white;
-    height: 100vh;
+    justify-content: space-evenly;
+    padding: 3vh 0 3vh 0;
+}
+@media screen and (max-width: 768px){
+    .all_content_container{ 
+        padding: 3vh 3vw;
+    }
 }
 
 h1{
+    text-transform: uppercase;
     font-family: "Anton", serif;
-    font-size: 3em;
+    font-size: 3.6em;
     font-weight: 500;
     font-style: normal;
     color: transparent;
     background-image: linear-gradient(90deg, #FF8E00, #FD7702, #FF5003, #ff5100, #FF8E00);
     background-repeat: repeat-x;
     background-clip: text;
-    background-size: 400% 100%;
     animation: gradient 3s linear infinite;
-    height: 100%;
-    position: absolute;
 }
 @keyframes gradient {
     0%{
-        background-position:100% 50%
+        background-position: 100% 50%;
     }
     100%{
-        background-position:-33% 50%
+        background-position: -33% 50%;
     }
-  }
+}
+@media screen and (min-width: 1400px){
+    h1{
+        font-size: 4.5em;
+    }
+}
+@media screen and (max-width: 768px){
+    h1{
+        font-size: 3em;
+    }
+}
+#sort_form{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 18px;
+    padding: 3.6vh 5vw;
+    margin: 3vh 0;
+    border-radius: 50px;
+    background-color: #00a8f711;
+    box-shadow: 0 5px 40px  #0000001e;
+    font-size: 0.8em;
+}
 
+.elem_type_input{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 5px;
+    padding-bottom: 20px;
+    border-bottom:2px solid #b6b6b627;
+}
+.elem_type_input input[type=range]{
+    accent-color: #58caff;
+}
+/*accent-color: #58caff;
+border: 2.4px solid #fff;*/
 
-button{
+label[for="sortTypeDropdown"]{
+    margin-left: 40px;
+}
+
+.controls{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 10px;
+}
+.fa-play,
+.fa-stop{
+    width: 15px;
+}
+#playBtn,
+#stopBtn{
+    padding: 4px 14px;
+    border-radius: 50px;
+    border: 2.3px solid #e0f4ff;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 5px;
+    background-color: #58caff69;
+    color: #e0f4ff;
+}
+
+#initBtn{
+    padding: 5px 16px;
+    border-radius: 50px;
+    border: none;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 5px;
+    background-color: #ffffff;
+    color: #08577ce0;
+}
+#sortTypeDropdown{
+    padding: 5px;
+    background-color: rgb(56, 56, 56);
+    border: 2.4px solid #a0d9ff;
+    color: #7bd5ff;
+    font-weight: 500;
+    border-radius: 20px;
+}
+#sortSpeed{
+    padding: 4px;
+    background-color: #ffffff;
+    color: #08577ce0; 
+    font-weight: 500;
+    border-radius: 20px;
+}
+#sortSpeed option,
+#sortTypeDropdown option{
+    background-color: #b8c8cfb4;
+    color: #07608ad7; 
+    font-weight: 500;
+    text-align: center;
+}
+
+button,
+select{
     font-family: "Barlow Condensed", serif;
     font-style: normal;
+    font-size: 1em;
 }
 
 
 #container{
-    height: 200px;
+    width: 80%;
+    height: 45vh;
     display: flex;
     align-items: flex-end;
 }
 
 .bar{
-    width: 10px;
-    background-color: grey;
+    margin: 0 2px;
+    background-color: #ebd9c8;
+    display: inline-block;
+    flex: 1;
 }
 
-.bar.compare{
+.bar.compare,
+#compareLegend{
     background-color: blue;
 }
-.bar.move{
+.bar.move,
+#moveLegend{
     background-color: red;
 }
-.bar.swap{
-    background-color: pink;
+.bar.swap,
+#swapLegend{
+    background-color: purple;
 }
-.bar.merge{
+.bar.merge,
+#mergeLegend{
     background-color: green;
 }
-.bar.pivot{
+.bar.pivot,
+#pivotLegend{
     background-color: gold;
 }
-.bar.minIndex{
+.bar.minIndex,
+#minIndexLegend{
     background-color: orange;
+}
+
+.legends{
+    margin: 2vh 0;
+    display: flex;
+    flex-direction: row;
+    gap: 25px;
+}
+
+.legends h5{
+    text-transform: uppercase;
+    font-weight: 700;
+}
+
+#legendContainer{
+    list-style: none;
+    display: flex;
+    flex-direction: row;
+    justify-content:center;
+    align-items: center;
+    gap: 25px;
+}
+#legendContainer li{
+    display: flex;
+    flex-direction: row;
+    justify-content:center;
+    align-items: center;
+    gap: 5px;
+    font-size: 0.9em;
+}
+
+.legend{
+    width: 20px;
+    height: 20px;
 }

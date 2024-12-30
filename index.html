@@ -9,36 +9,52 @@
     <script src="https://kit.fontawesome.com/f3ca928850.js" crossorigin="anonymous"></script>
 </head>
 <body>
-    <h1>Sorting Visualizer</h1>
-    <p>Select number of elements to sort and the type of sort you would like to visulaize and press play.</p>
-    <form id="sort_form">
-        <label for="rangeSlider"> Number Of Elem: <span id="sliderOutput"></span></label>
-        <input type="range" min="10" max="150" value="10" id="rangeSlider">
-        <label for="sortTypeDropdown"> Sort Type: </label>
-        <select id="sortTypeDropdown" >
-            <option value="bubblesort">bubblesort</option>
-            <option value="quicksort">quicksort</option>
-            <option value="mergesort">mergesort</option>
-            <option value="selectionsort">selectionsort</option>
-            <option value="insertionsort">insertionsort</option>
-            
-        </select>
-        <div class="controls">
-            <select id="sortSpeed" >
-                <option value="1">x1</option>
-                <option value="1.25">x1.25</option>
-                <option value="1.5">x1.5</option>
-                <option value="0.25">x0.25</option>
-                <option value="0.5">0.5</option>
-                
-            </select>
-            <button id="playBtn"><i class="fa-solid fa-play"></i> Play</button>
-            <button id="stopBtn"><i class="fa-solid fa-stop"></i> Stop</button>
-            <button id="init"><i class="fa-solid fa-arrows-rotate"></i></button>    
+    <div class="all_content_container">
+        <h1>Sorting Visualizer</h1>
+        <p>Select number of elements to sort and the type of sort you would like to visulaize and press play.</p>
+        <form id="sort_form">
+            <div class="elem_type_input">
+                <label for="rangeSlider"> Number Of Elem: <span id="sliderOutput"></span></label>
+                <input type="range" min="10" max="150" value="10" id="rangeSlider">
+                <label for="sortTypeDropdown"> Sort Type: </label>
+                <select id="sortTypeDropdown" >
+                    <option value="bubblesort">bubblesort</option>
+                    <option value="quicksort">quicksort</option>
+                    <option value="mergesort">mergesort</option>
+                    <option value="selectionsort">selectionsort</option>
+                    <option value="insertionsort">insertionsort</option>
+                    
+                </select>    
+            </div>
+            <div class="controls">
+                <select id="sortSpeed" >
+                    <option value="1">x1</option>
+                    <option value="1.25">x1.25</option>
+                    <option value="1.5">x1.5</option>
+                    <option value="0.25">x0.25</option>
+                    <option value="0.5">0.5</option>
+                    
+                </select>
+                <button id="playBtn"><i class="fa-solid fa-play"></i> Play</button>
+                <button id="stopBtn"><i class="fa-solid fa-stop"></i> Stop</button>
+                <button id="initBtn"><i class="fa-solid fa-arrows-rotate"></i></button>    
+            </div>
+        </form>
+        
+        <div id="container"></div>   
+        
+        <div class="legends">
+            <h5>Legend: </h5>
+            <ul id="legendContainer">
+                <li><div class="legend" id="compareLegend"></div>compare</li>
+                <li><div class="legend" id="swapLegend"></div>swap</li>
+                <li><div class="legend" id="mergeLegend"></div>merge</li>
+                <li><div class="legend" id="pivotLegend"></div>pivot</li>
+                <li><div class="legend" id="minIndexLegend"></div>minIndex</li>
+            </ul>
         </div>
-    </form>
-    
-    <div id="container"></div>
+    </div>
 </body>
 <script src="script.js"></script>
 </html>
+
