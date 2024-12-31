@@ -226,7 +226,7 @@ async function partition(array, low, high){
 }
 async function quicksort(array, low, high){
     setStatus("QuickSort", "running...");
-    if(low < high){
+    if(low < high && shouldRun) {
         let pi = await partition(array, low, high);
         await quicksort(array, low, pi-1);
         await quicksort(array, pi+1, high);
