@@ -1,7 +1,7 @@
 # sorting_visualizer
- You can view visualization of the following sorting algorithms:
- BubbleSort
- QuickSort
- MergeSort
- SelectionSort
- InsertionSort
+ You can view visualizations of the following sorting algorithms: __
+ * BubbleSort
+ * QuickSort
+ * MergeSort
+ * SelectionSort
+ * InsertionSort
