@@ -1,6 +1,6 @@
-# sorting_visualizer 🖥️
+# Sorting Visualizer 🖥️
 
-Demo: **https://celinastha.github.io/sorting_visualizer/** <br />
+Demo: **https://celinastha.github.io/sorting_visualizer/** <br /> <br />
 
 
 ## Core Features ⭐
